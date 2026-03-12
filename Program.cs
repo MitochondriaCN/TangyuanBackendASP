@@ -17,10 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.Converters.Add(new JsonDateTimeConverter());
-    });
+    .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonDateTimeConverter()); });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -52,7 +49,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-//JWT验证机制
+// JWT验证机制
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -62,26 +59,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidateIssuer = false,
             ValidateAudience = false,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]
+                                       ?? throw new InvalidOperationException("JWT:Key not found.")))
         };
     });
 
 builder.Services.AddScoped<AuthService>();
 
-//开发环境下，连接远端MySQL
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<TangyuanDbContext>(
-        options => options.UseMySQL(builder.Configuration.GetConnectionString("Remote")));
-}
-//生产环境下，连接本地MySQL
-else
-{
-    builder.Services.AddDbContext<TangyuanDbContext>(
-        options => options.UseMySQL(builder.Configuration.GetConnectionString("Local")));
-}
+// 数据库
+builder.Services.AddDbContext<TangyuanDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("LocalPSql")
+                      ?? throw new InvalidOperationException("Connection string 'LocalPSql' not found.")));
 
-
+// app
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -106,12 +97,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//如果根目录不存在，创建
+// 如果根目录不存在，创建
 if (!Directory.Exists("wwwroot"))
 {
     Directory.CreateDirectory("wwwroot");
 }
-//如果images文件夹不存在，创建
+
+// 如果images文件夹不存在，创建
 if (!Directory.Exists("wwwroot/images"))
 {
     Directory.CreateDirectory("wwwroot/images");
