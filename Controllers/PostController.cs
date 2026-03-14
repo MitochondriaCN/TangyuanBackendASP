@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TangyuanBackendASP.Data;
-using TangyuanBackendASP.Models;
+using TangyuanBackendASP.Domain.Entities;
 
 namespace TangyuanBackendASP.Controllers
 {
