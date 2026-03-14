@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TangyuanBackendASP.Data;
-using TangyuanBackendASP.Models;
+using TangyuanBackendASP.Domain.Entities;
 
 namespace TangyuanBackendASP.Controllers
 {

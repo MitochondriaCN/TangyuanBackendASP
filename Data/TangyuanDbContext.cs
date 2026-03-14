@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TangyuanBackendASP.Domain.Entities;
 
 namespace TangyuanBackendASP.Data
 {
@@ -9,14 +10,14 @@ namespace TangyuanBackendASP.Data
             Database.EnsureCreated();
         }
 
-        public DbSet<Models.PostMetadata> PostMetadata { get; set; } = null;
-        public DbSet<Models.User> User { get; set; } = null;
-        public DbSet<Models.PostBody> PostBody { get; set; } = null;
-        public DbSet<Models.Comment> Comment { get; set; } = null;
-        public DbSet<Models.Notification> Notification { get; set; } = null;
-        public DbSet<Models.Category> Category { get; set; } = null;
-        public DbSet<Models.NewNotification> NewNotification { get; set; } = null;
+        public DbSet<PostMetadata> PostMetadata { get; set; } = null;
+        public DbSet<User> User { get; set; } = null;
+        public DbSet<PostBody> PostBody { get; set; } = null;
+        public DbSet<Comment> Comment { get; set; } = null;
+        public DbSet<Notification> Notification { get; set; } = null;
+        public DbSet<Category> Category { get; set; } = null;
+        public DbSet<NewNotification> NewNotification { get; set; } = null;
 
-        public DbSet<Models.Follow> Follow { get; set; } = null;
+        public DbSet<Follow> Follow { get; set; } = null;
     }
 }
