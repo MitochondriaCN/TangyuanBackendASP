@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TangyuanBackendASP.Domain.Enums;
 using TangyuanBackendASP.Shared.Utils;
 
 namespace TangyuanBackendASP.Domain.Entities.Notifications;
 
+/// <summary>
+/// 通知基类
+/// </summary>
 public abstract class Notification
 {
     protected Notification()

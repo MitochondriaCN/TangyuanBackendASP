@@ -10,7 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using TangyuanBackendASP.Data;
+using TangyuanBackendASP.Infra;
+using TangyuanBackendASP.Shared.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +67,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddScoped<AuthService>();
+
+// MediatR
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.LicenseKey = builder.Configuration["MediatR:LicenseKey"];
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
 
 // 数据库
 builder.Services.AddDbContext<TangyuanDbContext>(options =>

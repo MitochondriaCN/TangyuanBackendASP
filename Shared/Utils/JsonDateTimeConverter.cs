@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace TangyuanBackendASP.Data
+namespace TangyuanBackendASP.Shared.Utils
 {
     public class JsonDateTimeConverter : JsonConverter<DateTime>
     {

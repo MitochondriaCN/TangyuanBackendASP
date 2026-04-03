@@ -12,7 +12,7 @@ public class Post
     {
     }
 
-    public Post(long userId, string textContent, long categoryId, params string[] imageGuids)
+    public Post(long userId, string textContent, long categoryId, DateTime postDateTime, params string[] imageGuids)
     {
         if (imageGuids.Length > 3)
             throw new ArgumentException("一条帖子最多只能有三张图片");
@@ -22,7 +22,7 @@ public class Post
         TextContent = textContent;
         CategoryId = categoryId;
         ImageGuids = imageGuids;
-        PostDateTime = DateTime.UtcNow;
+        PostDateTime = postDateTime;
         IsVisible = true;
     }
 
@@ -30,6 +30,12 @@ public class Post
 
     public long UserId { get; private set; }
 
+    /// <summary>
+    /// 帖子发布时间
+    /// <remarks>
+    /// 只代表帖子语义上的时间，并不代表帖子创建时间
+    /// </remarks>
+    /// </summary>
     public DateTime PostDateTime { get; private set; }
 
     public long CategoryId { get; private set; }

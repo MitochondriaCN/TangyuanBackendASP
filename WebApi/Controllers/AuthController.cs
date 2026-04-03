@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TangyuanBackendASP.Data;
 using TangyuanBackendASP.Domain.Entities;
+using TangyuanBackendASP.Shared.Utils;
 
 namespace TangyuanBackendASP.Controllers
 {

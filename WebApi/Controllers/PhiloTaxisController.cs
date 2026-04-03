@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TangyuanBackendASP.Data;
 
 namespace TangyuanBackendASP.Controllers
 {
