@@ -1,7 +1,7 @@
-﻿using TangyuanBackendASP.Application.Posts.Dtos;
+﻿using TangyuanBackendASP.Application.Dtos;
 using TangyuanBackendASP.Domain.Entities;
 
-namespace TangyuanBackendASP.Application.Posts.Mappers;
+namespace TangyuanBackendASP.Application.Mappers;
 
 public static class PostMapper
 {

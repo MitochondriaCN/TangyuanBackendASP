@@ -1,11 +1,11 @@
 ﻿using MediatR;
+using TangyuanBackendASP.Application.Dtos;
 using TangyuanBackendASP.Application.Interfaces;
-using TangyuanBackendASP.Application.Posts.Dtos;
-using TangyuanBackendASP.Application.Posts.Mappers;
-using TangyuanBackendASP.Application.Posts.Queries;
+using TangyuanBackendASP.Application.Mappers;
+using TangyuanBackendASP.Application.Queries;
 using TangyuanBackendASP.Domain.Entities;
 
-namespace TangyuanBackendASP.Application.Posts.Handlers;
+namespace TangyuanBackendASP.Application.Handlers;
 
 public class GetPostHandler(
     IPostRepository repo) : IRequestHandler<GetPostQuery, PostDto>

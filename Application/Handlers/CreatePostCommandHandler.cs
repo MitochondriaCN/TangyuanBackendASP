@@ -1,9 +1,9 @@
 ﻿using MediatR;
+using TangyuanBackendASP.Application.Commands;
 using TangyuanBackendASP.Application.Interfaces;
-using TangyuanBackendASP.Application.Posts.Commands;
 using TangyuanBackendASP.Domain.Entities;
 
-namespace TangyuanBackendASP.Application.Posts.Handlers;
+namespace TangyuanBackendASP.Application.Handlers;
 
 public class CreatePostCommandHandler(
     IPostRepository repo) : IRequestHandler<CreatePostCommand, long>

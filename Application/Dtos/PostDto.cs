@@ -1,6 +1,6 @@
 ﻿using TangyuanBackendASP.Domain.Entities;
 
-namespace TangyuanBackendASP.Application.Posts.Dtos;
+namespace TangyuanBackendASP.Application.Dtos;
 
 public record PostDto(
     long Id,

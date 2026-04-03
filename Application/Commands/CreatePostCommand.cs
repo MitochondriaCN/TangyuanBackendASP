@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace TangyuanBackendASP.Application.Posts.Commands;
+namespace TangyuanBackendASP.Application.Commands;
 
 public record CreatePostCommand(
     long UserId,
