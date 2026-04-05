@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TangyuanBackendASP.Shared.Utils;
+﻿using TangyuanBackendASP.Shared.Utils;
 
 namespace TangyuanBackendASP.Domain.Entities;
 
@@ -17,14 +16,14 @@ public class User
         if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("密码不能为空");
         if (string.IsNullOrWhiteSpace(phoneNumber)) throw new ArgumentException("手机号不能为空");
 
-        UserId = SnowflakeUtils.GenerateSnowflakeId();
+        Id = SnowflakeUtils.GenerateSnowflakeId();
         Password = password;
         PhoneNumber = phoneNumber;
         NickName = nickName;
         IsoRegionName = isoRegionName;
     }
 
-    public long UserId { get; private set; }
+    public long Id { get; private set; }
 
     /// <summary>
     /// 密码（Bcrypt）

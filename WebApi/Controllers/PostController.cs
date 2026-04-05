@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TangyuanBackendASP.Application.Commands;
+using TangyuanBackendASP.WebApi.Models;
 using TangyuanBackendASP.WebApi.Utils;
 
 namespace TangyuanBackendASP.WebApi.Controllers;
@@ -16,7 +17,7 @@ public class PostController(IMediator mediator) : Controller
         CancellationToken cancellationToken)
     {
         var userId = HttpContext.User.GetUserId();
-        
+
         var command = new CreatePostCommand(
             userId,
             DateTime.Now,
@@ -25,7 +26,7 @@ public class PostController(IMediator mediator) : Controller
             request.ImageGuids ?? []);
 
         var postId = await mediator.Send(command, cancellationToken);
-        return Ok(new { PostId = postId });
+        return Ok(ApiResponse.Success(postId.ToString()));
     }
 
     public record CreatePostRequest(

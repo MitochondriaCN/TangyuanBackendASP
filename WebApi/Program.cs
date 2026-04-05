@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using TangyuanBackendASP.Application.Interfaces;
 using TangyuanBackendASP.Infra;
 using TangyuanBackendASP.Infra.Persistence;
+using TangyuanBackendASP.Infra.Services;
 using TangyuanBackendASP.Shared.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -82,8 +83,10 @@ builder.Services.AddDbContext<TangyuanDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalPSql")
                       ?? throw new InvalidOperationException("Connection string 'LocalPSql' not found.")));
 
-// Repository
+// DI
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordEncryptor, BcryptPasswordEncryptor>();
 
 // app
 var app = builder.Build();

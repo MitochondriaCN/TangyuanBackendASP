@@ -6,6 +6,8 @@ public interface IUserRepository
 {
     Task<User?> GetUserByIdAsync(long userId);
 
+    Task<bool> CheckPhoneNumberExistsAsync(string phoneNumber);
+
     Task<List<User>> SearchUserByNicknameAsync(string nickname);
 
     Task AddUserAsync(User user);
