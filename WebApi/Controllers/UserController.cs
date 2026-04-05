@@ -18,8 +18,12 @@ public class UserController(IMediator mediator) : Controller
             PhoneNumber: request.PhoneNumber,
             IsoRegionName: request.IsoRegionName);
 
-        var userId = await mediator.Send(command);
-        return Ok(ApiResponse.Success(userId.ToString()));
+        var result = await mediator.Send(command);
+
+        if (result.IsSuccess)
+            return Ok(ApiResponse.Success(result.Value.ToString()));
+
+        return BadRequest(ApiResponse.Error(result.Errors));
     }
 
     public record UserRegisterRequest(

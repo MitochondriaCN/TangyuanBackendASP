@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentResults;
+using MediatR;
 using TangyuanBackendASP.Application.Commands;
 using TangyuanBackendASP.Application.Interfaces;
 using TangyuanBackendASP.Domain.Entities;
@@ -6,9 +7,9 @@ using TangyuanBackendASP.Domain.Entities;
 namespace TangyuanBackendASP.Application.Handlers;
 
 public class CreatePostCommandHandler(
-    IPostRepository repo) : IRequestHandler<CreatePostCommand, long>
+    IPostRepository repo) : IRequestHandler<CreatePostCommand, Result<long>>
 {
-    public async Task<long> Handle(CreatePostCommand command, CancellationToken cancellationToken)
+    public async Task<Result<long>> Handle(CreatePostCommand command, CancellationToken cancellationToken)
     {
         var post = new Post(
             command.UserId,
@@ -17,6 +18,6 @@ public class CreatePostCommandHandler(
             command.PostDateTime,
             command.ImageGuids);
         await repo.AddPostAsync(post);
-        return post.PostId;
+        return Result.Ok(post.PostId);
     }
 }

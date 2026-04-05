@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentResults;
+using MediatR;
 
 namespace TangyuanBackendASP.Application.Commands;
 
@@ -7,4 +8,4 @@ public record CreateUserCommand(
     string Password,
     string Nickname,
     string PhoneNumber,
-    string IsoRegionName) : IRequest<long>;
+    string IsoRegionName) : IRequest<Result<long>>;

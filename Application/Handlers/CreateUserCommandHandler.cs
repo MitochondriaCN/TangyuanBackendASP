@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentResults;
+using MediatR;
 using TangyuanBackendASP.Application.Commands;
 using TangyuanBackendASP.Application.Interfaces;
 using TangyuanBackendASP.Domain.Entities;
@@ -7,14 +8,14 @@ namespace TangyuanBackendASP.Application.Handlers;
 
 public class CreateUserCommandHandler(
     IUserRepository repo,
-    IPasswordEncryptor encryptor) : IRequestHandler<CreateUserCommand, long>
+    IPasswordEncryptor encryptor) : IRequestHandler<CreateUserCommand, Result<long>>
 {
-    public async Task<long> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<long>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var phoneNumberExists = await repo.CheckPhoneNumberExistsAsync(request.PhoneNumber);
         if (phoneNumberExists)
         {
-            throw new ArgumentException("手机号已存在");
+            return Result.Fail("手机号已存在");
         }
 
         var user = new User(
@@ -24,6 +25,6 @@ public class CreateUserCommandHandler(
             isoRegionName: request.IsoRegionName);
 
         await repo.AddUserAsync(user);
-        return user.Id;
+        return Result.Ok(user.Id);
     }
 }

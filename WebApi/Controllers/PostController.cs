@@ -25,8 +25,12 @@ public class PostController(IMediator mediator) : Controller
             request.TextContent,
             request.ImageGuids ?? []);
 
-        var postId = await mediator.Send(command, cancellationToken);
-        return Ok(ApiResponse.Success(postId.ToString()));
+        var result = await mediator.Send(command, cancellationToken);
+
+        if (result.IsSuccess)
+            return Ok(ApiResponse.Success(result.Value.ToString()));
+
+        return BadRequest(ApiResponse.Error(result.Errors));
     }
 
     public record CreatePostRequest(

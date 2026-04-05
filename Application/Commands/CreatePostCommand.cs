@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentResults;
+using MediatR;
 
 namespace TangyuanBackendASP.Application.Commands;
 
@@ -8,4 +9,4 @@ public record CreatePostCommand(
     long CategoryId,
     string TextContent,
     params string[] ImageGuids
-) : IRequest<long>;
+) : IRequest<Result<long>>;
