@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace TangyuanBackendASP.Controllers
+namespace TangyuanBackendASP.WebApi.Controllers.Deprecated
 {
     [ApiController]
     [Route("api/[controller]")]

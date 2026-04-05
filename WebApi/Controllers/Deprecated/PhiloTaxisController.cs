@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TangyuanBackendASP.Controllers
+namespace TangyuanBackendASP.WebApi.Controllers.Deprecated
 {
     /// <summary>
     /// PhiloTaxis™ 循秩™ 推荐控制器

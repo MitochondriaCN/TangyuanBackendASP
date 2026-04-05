@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TangyuanBackendASP.Application.Posts.Commands;
-using TangyuanBackendASP.Domain.Entities;
+using TangyuanBackendASP.Application.Commands;
+using TangyuanBackendASP.WebApi.Utils;
 
 namespace TangyuanBackendASP.WebApi.Controllers;
 
@@ -15,9 +15,11 @@ public class PostController(IMediator mediator) : Controller
     public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest request,
         CancellationToken cancellationToken)
     {
+        var userId = HttpContext.User.GetUserId();
+        
         var command = new CreatePostCommand(
-            request.UserId,
-            request.PostDateTime,
+            userId,
+            DateTime.Now,
             request.CategoryId,
             request.TextContent,
             request.ImageGuids ?? []);
@@ -27,8 +29,6 @@ public class PostController(IMediator mediator) : Controller
     }
 
     public record CreatePostRequest(
-        long UserId,
-        DateTime PostDateTime,
         long CategoryId,
         string TextContent,
         string[]? ImageGuids

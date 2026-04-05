@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TangyuanBackendASP.Domain.Entities;
 
-namespace TangyuanBackendASP.Controllers
+namespace TangyuanBackendASP.WebApi.Controllers.Deprecated
 {
     [ApiController]
     [Route("api/[controller]")]

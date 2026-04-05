@@ -5,12 +5,14 @@
  * ——卡尔·马克思
  */
 
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
+using TangyuanBackendASP.Application.Interfaces;
 using TangyuanBackendASP.Infra;
+using TangyuanBackendASP.Infra.Persistence;
 using TangyuanBackendASP.Shared.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -62,7 +64,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]
-                                       ?? throw new InvalidOperationException("JWT:Key not found.")))
+                                       ?? throw new InvalidOperationException("JWT: Key not found.")))
         };
     });
 
@@ -79,6 +81,9 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddDbContext<TangyuanDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("LocalPSql")
                       ?? throw new InvalidOperationException("Connection string 'LocalPSql' not found.")));
+
+// Repository
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 // app
 var app = builder.Build();

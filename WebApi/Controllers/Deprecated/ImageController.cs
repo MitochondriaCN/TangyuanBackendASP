@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TangyuanBackendASP.Controllers
+namespace TangyuanBackendASP.WebApi.Controllers.Deprecated
 {
     /// <summary>
     /// 管理图片的上传，下载不需要管理，因为可以通过UseStaticFiles()中间件直接访问。

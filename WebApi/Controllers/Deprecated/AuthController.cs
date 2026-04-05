@@ -2,7 +2,7 @@
 using TangyuanBackendASP.Domain.Entities;
 using TangyuanBackendASP.Shared.Utils;
 
-namespace TangyuanBackendASP.Controllers
+namespace TangyuanBackendASP.WebApi.Controllers.Deprecated
 {
     [ApiController]
     [Route("api/[controller]")]
