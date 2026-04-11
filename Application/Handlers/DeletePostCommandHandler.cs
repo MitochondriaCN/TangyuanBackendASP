@@ -2,6 +2,7 @@ using FluentResults;
 using MediatR;
 using TangyuanBackendASP.Application.Commands;
 using TangyuanBackendASP.Application.Interfaces;
+using TangyuanBackendASP.Domain.Common;
 
 namespace TangyuanBackendASP.Application.Handlers;
 
@@ -10,15 +11,20 @@ public class DeletePostCommandHandler(
 {
     public async Task<Result> Handle(DeletePostCommand command, CancellationToken cancellationToken)
     {
-        var post = await repo.GetPostByIdAsync(command.PostId);
+        var post = await repo.GetByIdAsync(command.PostId, cancellationToken);
 
         if (post == null)
             return Result.Fail("未找到帖子");
 
-        if (post.UserId != command.UserId)
-            return Result.Fail("您不是帖子的作者");
-
-        await repo.DeletePostAsync(command.PostId);
-        return Result.Ok();
+        try
+        {
+            post.EnsureAuthoredBy(command.UserId);
+            await repo.RemoveAsync(post, cancellationToken);
+            return Result.Ok();
+        }
+        catch (DomainException ex)
+        {
+            return Result.Fail(ex.Message);
+        }
     }
 }

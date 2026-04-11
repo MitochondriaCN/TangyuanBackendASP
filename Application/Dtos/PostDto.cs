@@ -1,5 +1,3 @@
-﻿using TangyuanBackendASP.Domain.Entities;
-
 namespace TangyuanBackendASP.Application.Dtos;
 
 public record PostDto(

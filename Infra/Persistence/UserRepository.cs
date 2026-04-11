@@ -1,39 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TangyuanBackendASP.Application.Interfaces;
-using TangyuanBackendASP.Domain.Entities;
+using TangyuanBackendASP.Domain.Users;
 
 namespace TangyuanBackendASP.Infra.Persistence;
 
 public class UserRepository(TangyuanDbContext db) : IUserRepository
 {
-    public Task<User?> GetUserByIdAsync(long userId)
+    public Task<User?> GetByIdAsync(long userId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return db.Users.FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
     }
 
-    public Task<bool> CheckPhoneNumberExistsAsync(string phoneNumber)
+    public Task<bool> ExistsByPhoneNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken)
     {
-        return db.Users.AnyAsync(u => u.PhoneNumber == phoneNumber);
+        return db.Users.AnyAsync(user => user.PhoneNumber == phoneNumber, cancellationToken);
     }
 
-    public Task<List<User>> SearchUserByNicknameAsync(string nickname)
+    public async Task AddAsync(User user, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await db.Users.AddAsync(user, cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
     }
 
-    public Task AddUserAsync(User user)
+    public Task SaveChangesAsync(CancellationToken cancellationToken)
     {
-        db.Users.Add(user);
-        return db.SaveChangesAsync();
-    }
-
-    public Task UpdateUserAsync(User user)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task DeleteUserAsync(long userId)
-    {
-        throw new NotImplementedException();
+        return db.SaveChangesAsync(cancellationToken);
     }
 }

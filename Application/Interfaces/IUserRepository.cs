@@ -1,18 +1,11 @@
-﻿using TangyuanBackendASP.Domain.Entities;
+using TangyuanBackendASP.Domain.Users;
 
 namespace TangyuanBackendASP.Application.Interfaces;
 
 public interface IUserRepository
 {
-    Task<User?> GetUserByIdAsync(long userId);
-
-    Task<bool> CheckPhoneNumberExistsAsync(string phoneNumber);
-
-    Task<List<User>> SearchUserByNicknameAsync(string nickname);
-
-    Task AddUserAsync(User user);
-
-    Task UpdateUserAsync(User user);
-
-    Task DeleteUserAsync(long userId);
+    Task<User?> GetByIdAsync(long userId, CancellationToken cancellationToken);
+    Task<bool> ExistsByPhoneNumberAsync(PhoneNumber phoneNumber, CancellationToken cancellationToken);
+    Task AddAsync(User user, CancellationToken cancellationToken);
+    Task SaveChangesAsync(CancellationToken cancellationToken);
 }

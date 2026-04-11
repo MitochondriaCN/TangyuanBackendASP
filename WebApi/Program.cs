@@ -85,7 +85,9 @@ builder.Services.AddDbContext<TangyuanDbContext>(options =>
 
 // DI
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IPostQueries, PostQueries>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IIdGenerator, SnowflakeIdGenerator>();
 builder.Services.AddScoped<IPasswordEncryptor, BcryptPasswordEncryptor>();
 
 // app

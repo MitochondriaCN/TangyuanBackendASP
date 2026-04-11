@@ -20,7 +20,6 @@ public class PostController(IMediator mediator) : Controller
 
         var command = new CreatePostCommand(
             userId,
-            DateTime.Now,
             request.CategoryId,
             request.TextContent,
             request.ImageGuids ?? []);

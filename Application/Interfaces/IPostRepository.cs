@@ -1,14 +1,10 @@
-﻿using TangyuanBackendASP.Domain.Entities;
+using TangyuanBackendASP.Domain.Posts;
 
 namespace TangyuanBackendASP.Application.Interfaces;
 
 public interface IPostRepository
 {
-    Task<Post?> GetPostByIdAsync(long postId);
-
-    Task<List<Post>> GetPostsByUserIdAsync(long userId);
-
-    Task AddPostAsync(Post post);
-
-    Task DeletePostAsync(long postId);
+    Task<Post?> GetByIdAsync(long postId, CancellationToken cancellationToken);
+    Task AddAsync(Post post, CancellationToken cancellationToken);
+    Task RemoveAsync(Post post, CancellationToken cancellationToken);
 }

@@ -1,36 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using TangyuanBackendASP.Application.Interfaces;
-using TangyuanBackendASP.Domain.Entities;
+using TangyuanBackendASP.Domain.Posts;
 
 namespace TangyuanBackendASP.Infra.Persistence;
 
 public class PostRepository(TangyuanDbContext db) : IPostRepository
 {
-    public async Task<Post?> GetPostByIdAsync(long postId)
+    public Task<Post?> GetByIdAsync(long postId, CancellationToken cancellationToken)
     {
-        return await db.Posts.FirstOrDefaultAsync(p => p.PostId == postId) ?? null!;
+        return db.Posts.FirstOrDefaultAsync(post => post.Id == postId, cancellationToken);
     }
 
-    public Task<List<Post>> GetPostsByUserIdAsync(long userId)
+    public async Task AddAsync(Post post, CancellationToken cancellationToken)
     {
-        return db.Posts.Where(p => p.UserId == userId).ToListAsync();
+        await db.Posts.AddAsync(post, cancellationToken);
+        await db.SaveChangesAsync(cancellationToken);
     }
 
-    public Task AddPostAsync(Post post)
+    public async Task RemoveAsync(Post post, CancellationToken cancellationToken)
     {
-        db.Posts.Add(post);
-        return db.SaveChangesAsync();
-    }
-
-    public async Task DeletePostAsync(long postId)
-    {
-        var post = await db.Posts.FirstOrDefaultAsync(p => p.PostId == postId);
-        if (post is null)
-        {
-            return;
-        }
-
         db.Posts.Remove(post);
-        await db.SaveChangesAsync();
+        await db.SaveChangesAsync(cancellationToken);
     }
 }
