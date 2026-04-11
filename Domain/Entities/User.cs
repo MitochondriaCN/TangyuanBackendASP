@@ -11,7 +11,7 @@ public class User
     {
     }
 
-    public User(string password, string phoneNumber, string nickName, string isoRegionName)
+    public User(string password, string phoneNumber, string nickname, string isoRegionName)
     {
         if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("密码不能为空");
         if (string.IsNullOrWhiteSpace(phoneNumber)) throw new ArgumentException("手机号不能为空");
@@ -19,7 +19,7 @@ public class User
         Id = SnowflakeUtils.GenerateSnowflakeId();
         Password = password;
         PhoneNumber = phoneNumber;
-        NickName = nickName;
+        Nickname = nickname;
         IsoRegionName = isoRegionName;
     }
 
@@ -33,7 +33,7 @@ public class User
     /// <summary>
     /// 昵称
     /// </summary>
-    public string NickName { get; private set; } = null!;
+    public string Nickname { get; private set; } = null!;
 
     /// <summary>
     /// 手机号码
@@ -61,7 +61,18 @@ public class User
     /// </summary>
     public string? Bio { get; private set; }
 
-    public void UpdateAvatarGuid(string guid)
+    public void UpdateNickname(string nickname)
+    {
+        if (String.IsNullOrWhiteSpace(nickname))
+            throw new ArgumentException("昵称不能为空");
+
+        if (nickname.Length > 10)
+            throw new ArgumentException("昵称长度不能超过10个字符");
+
+        Nickname = nickname;
+    }
+
+    public void UpdateAvatarGuid(string? guid)
     {
         if (string.IsNullOrWhiteSpace(guid))
             throw new ArgumentNullException(nameof(guid));
@@ -69,19 +80,36 @@ public class User
         AvatarGuid = guid;
     }
 
-    public void UpdateEmail(string email)
+    public void UpdateEmail(string? email)
     {
-        if (string.IsNullOrWhiteSpace(email) || !StringValidateUtils.IsValidEmail(email))
+        if (email == null)
+        {
+            Email = null;
+            return;
+        }
+
+        if (!StringValidateUtils.IsValidEmail(email))
             throw new ArgumentException("邮箱格式错误", nameof(email));
 
         Email = email;
     }
 
-    public void UpdateBio(string bio)
+    public void UpdateBio(string? bio)
     {
         if (string.IsNullOrWhiteSpace(bio))
             throw new ArgumentNullException(nameof(bio));
 
         Bio = bio;
+    }
+
+    public void UpdatePhoneNumber(string phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            throw new ArgumentNullException(nameof(phoneNumber));
+
+        if (!DataValidator.IsPhoneNumberValid(phoneNumber, "CN"))
+            throw new ArgumentException("手机号格式错误", nameof(phoneNumber));
+
+        PhoneNumber = phoneNumber;
     }
 }

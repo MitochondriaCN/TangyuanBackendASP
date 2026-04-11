@@ -21,7 +21,7 @@ public class CreateUserCommandHandler(
         var user = new User(
             password: encryptor.Encrypt(request.Password),
             phoneNumber: request.PhoneNumber,
-            nickName: request.Nickname,
+            nickname: request.Nickname,
             isoRegionName: request.IsoRegionName);
 
         await repo.AddUserAsync(user);
