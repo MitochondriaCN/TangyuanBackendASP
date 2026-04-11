@@ -4,7 +4,7 @@ namespace TangyuanBackendASP.Application.Interfaces;
 
 public interface IPostRepository
 {
-    Task<Post> GetPostByIdAsync(long postId);
+    Task<Post?> GetPostByIdAsync(long postId);
 
     Task<List<Post>> GetPostsByUserIdAsync(long userId);
 

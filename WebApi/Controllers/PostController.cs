@@ -33,6 +33,21 @@ public class PostController(IMediator mediator) : Controller
         return BadRequest(ApiResponse.Error(result.Errors));
     }
 
+    [Authorize]
+    [HttpDelete("delete/{postId:long}")]
+    public async Task<IActionResult> DeletePost(long postId)
+    {
+        var userId = HttpContext.User.GetUserId();
+        var command = new DeletePostCommand(postId, userId);
+
+        var result = await mediator.Send(command);
+
+        if (result.IsSuccess)
+            return Ok(ApiResponse.Success());
+
+        return BadRequest(ApiResponse.Error(result.Errors));
+    }
+
     public record CreatePostRequest(
         long CategoryId,
         string TextContent,

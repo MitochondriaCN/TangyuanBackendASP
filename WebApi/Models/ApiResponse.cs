@@ -19,4 +19,6 @@ public record ApiResponse(string Message)
     }
 
     public static ApiResponse<TR> Success<TR>(TR data) => new("Success", data);
+
+    public static ApiResponse Success() => new("Success");
 }
